@@ -1,0 +1,424 @@
+<group name="FilterDL_VXDB" type="FilterDoubleLayerHits">
+    <parameter name="FillHistograms" type="bool" value="true" />
+    <parameter name="SubDetectorName" type="string" value="Vertex" />
+    <!-- Name of the input hit collection -->
+    <parameter name="InputCollection" type="string" value="VBTrackerHits" />
+    <!-- Name of the output filtered hit collection -->
+    <parameter name="OutputCollection" type="string" value="VBTrackerHits_DL" />
+    <!-- Configuration of the maximum dU and dTheta between a pair of hits at the inner and outer layer -->
+    <parameter name="DeltaTimeMax" type="float"> 0.3 </parameter>
+    <!-- 4 numbers per double-layer: <inner layer ID>  <outer layer ID>  <dPhi max [mrad]>  <dTheta max [mrad]> -->
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT">DEBUG0 </parameter>
+
+    <!-- NEW LOOSE CUTS -->
+    <processor name="FilterDL_VXDB" type="FilterDoubleLayerHits">
+      <parameter name="DoubleLayerCuts" type="StringVec">
+        0 1 2.0 35.0
+        2 3 1.7 18.0
+        4 5 1.5 10.0
+        6 7 1.4 6.5
+      </parameter>
+    </processor>
+  </group>   
+
+<processor name="FilterClusters_VE_originaltight" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      30.0 33.0 40.0 50.0 120.0
+      31.0 35.0 52.0 60.0 120.0
+      38.0 42.0 45.0 54.0 120.0
+      54.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- Tight Endcap R cuts-->
+      1.5 2.5 2.5 7.5
+      1.5 2.5 3.5 7.5
+      1.5 1.5 2.5 7.5
+      1.5 1.5 2.5 7.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_loose" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      30.0 33.0 40.0 50.0 120.0
+      31.0 35.0 52.0 60.0 120.0
+      38.0 42.0 45.0 54.0 120.0
+      54.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- Loose Endcap R cuts-->
+      2.5 3.5 3.5 5.5
+      1.5 2.5 3.5 5.5
+      2.5 2.5 3.5 5.5
+      2.5 2.5 3.5 5.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_loose2" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      30.0 33.0 40.0 50.0 120.0
+      31.0 35.0 52.0 60.0 120.0
+      38.0 42.0 45.0 54.0 120.0
+      54.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- loose2 Endcap R cuts-->
+      3.5 3.5 3.5 3.5
+      1.5 3.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_loose3" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      20.0 33.0 40.0 50.0 120.0
+      31.0 35.0 52.0 60.0 120.0
+      38.0 42.0 45.0 54.0 120.0
+      54.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- loose3 Endcap R cuts-->
+      3.5 3.5 3.5 3.5
+      1.5 3.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_loose4" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      20.0 33.0 40.0 50.0 120.0
+      20.0 35.0 52.0 60.0 120.0
+      20.0 42.0 45.0 54.0 120.0
+      20.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- tight4 Endcap R cuts-->
+      4.5 4.5 4.5 4.5
+      1.5 3.5 4.5 4.5
+      4.5 4.5 4.5 4.5
+      4.5 4.5 4.5 4.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_tight2" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      30.0 33.0 40.0 50.0 120.0
+      31.0 35.0 52.0 60.0 120.0
+      38.0 42.0 45.0 54.0 120.0
+      54.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- tight2 Endcap R cuts-->
+      2.5 2.5 3.5 3.5
+      1.5 2.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      2.5 2.5 3.5 3.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_tight3" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      20.0 33.0 40.0 50.0 120.0
+      31.0 35.0 52.0 60.0 120.0
+      38.0 42.0 45.0 54.0 120.0
+      54.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- tight2 Endcap R cuts-->
+      2.5 2.5 2.5 2.5
+      1.5 2.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      2.5 2.5 3.5 3.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VE_tight4" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="DetectorType" value="VertexEndcap" />
+    <parameter name="FilterByLayer" value="true" />
+    <parameter name="InputRanges" type="string">
+      <!-- Endcap R ranges-->
+      20.0 33.0 40.0 50.0 120.0
+      20.0 35.0 52.0 60.0 120.0
+      20.0 42.0 45.0 54.0 120.0
+      20.0 56.0 60.0 110.0 120.0
+       </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!-- tight4 Endcap R cuts-->
+      3.5 3.5 3.5 3.5
+      1.5 2.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      3.5 3.5 3.5 3.5
+      </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VETrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VETrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VETrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VETrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_VB_loose" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="ThetaRanges" type="string">
+      0 0.7 1.05 2.1 2.5 3.2 </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!--  tight cuts-->
+      <!--  4.5 3.5 2.5 3.5 4.5 -->
+      <!-- loose cuts -->
+      6.5, 4.5, 3.5, 4.5, 6.5 </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VBTrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VBTrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VBTrackerHits_CF <!--cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VBTrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_IB_loose" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="ThetaRanges" type="string">
+      0 0.7 1.05 2.1 2.5 3.2 </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!--  tight cuts-->
+      <!-- 4.5 3.5 2.5 3.5 4.5 -->
+      <!-- loose cuts -->
+      6.5, 4.5, 3.5, 4.5, 6.5 </parameter>
+    <parameter name="Layers" type="string">
+      3 3 3 3 3 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      IBTrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      IBTrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     IBTrackerHits_CF </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      IBTrackerHitsRelations_CF </parameter>
+  </processor>
+
+  <processor name="FilterClusters_OB_loose" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="ThetaRanges" type="string">
+      0 0.7 1.05 2.1 2.5 3.2 </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!--  tight cuts-->
+      <!-- 4.5 3.5 2.5 3.5 4.5 -->
+      <!-- loose cuts -->
+      6.5, 4.5, 3.5, 4.5, 6.5 </parameter>
+    <parameter name="Layers" type="string">
+      3 3 3 3 3 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      OBTrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      OBTrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     OBTrackerHits_CF </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      OBTrackerHitsRelations_CF </parameter>
+  </processor>
+
+  <processor name="FilterClusters_VB_tight" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="ThetaRanges" type="string">
+      0 0.7 1.05 2.1 2.5 3.2 </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!--  tight cuts-->
+      4.5 3.5 2.5 3.5 4.5
+      <!-- loose cuts -->
+      <!--6.5, 4.5, 3.5, 4.5, 6.5 --> </parameter>
+    <parameter name="Layers" type="string">
+      8 8 8 8 8 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      VBTrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      VBTrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     VBTrackerHits_CF <!-- time and cluster filtered --> </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      VBTrackerHitsRelations_CF </parameter>
+</processor>
+
+<processor name="FilterClusters_IB_tight" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="ThetaRanges" type="string">
+      0 0.7 1.05 2.1 2.5 3.2 </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!--  tight cuts-->
+      4.5 3.5 2.5 3.5 4.5
+      <!-- loose cuts -->
+      <!--6.5, 4.5, 3.5, 4.5, 6.5--> </parameter>
+    <parameter name="Layers" type="string">
+      3 3 3 3 3 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      IBTrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      IBTrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     IBTrackerHits_CF </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      IBTrackerHitsRelations_CF </parameter>
+  </processor>
+
+  <processor name="FilterClusters_OB_tight" type="FilterClusters"> 
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> DEBUG0  </parameter>
+    <parameter name="ThetaRanges" type="string">
+      0 0.7 1.05 2.1 2.5 3.2 </parameter>
+    <parameter name="ClusterSize" type="string">
+      <!--  tight cuts-->
+      4.5 3.5 2.5 3.5 4.5
+      <!-- loose cuts -->
+      <!--6.5, 4.5, 3.5, 4.5, 6.5--> </parameter>
+    <parameter name="Layers" type="string">
+      3 3 3 3 3 </parameter>
+    <parameter name="InTrackerHitCollection" type="string" lcioInType="TrackerHitPlane">
+      OBTrackerHits </parameter>
+    <parameter name="InRelationCollection" type="string" lcioInType="LCRelation">
+      OBTrackerHitsRelations </parameter>
+    <parameter name="OutTrackerHitCollection" type="string" lcioOutType="TrackerHitPlane">
+     OBTrackerHits_CF </parameter>
+    <parameter name="OutRelationCollection" type="string" lcioOutType="LCRelation">
+      OBTrackerHitsRelations_CF </parameter>
+  </processor>
+
+  <processor name="HitTimeFilter_VX" type = "FilterTimeHits"> 
+    <parameter name="TrackerHitInputCollections" type="StringVec"> VBTrackerHits_CF</parameter>
+    <parameter name="TrackerSimHitInputCollections" type="StringVec"> VertexBarrelCollection </parameter>
+    <parameter name="TrackerHitInputRelations" type="StringVec"> VBTrackerHitsRelations_CF </parameter>
+    <parameter name="TrackerHitOutputCollections" type="StringVec"> VBTrackerHits_CTF </parameter>
+    <parameter name="TrackerSimHitOutputCollections" type="StringVec"> VertexBarrelCollection_TF </parameter>
+    <parameter name="TrackerHitOutputRelations" type="StringVec"> VBTrackerHitsRelations_CTF </parameter>
+    <parameter name="TimeLowerLimit" type="double"> -0.09 </parameter>
+    <parameter name="TimeUpperLimit" type="double">  0.09 </parameter>
+    <parameter name="FillHistograms" type="bool" value="true" />
+  </processor>
+
+  <processor name="HitTimeFilter_IT" type = "FilterTimeHits"> 
+    <parameter name="TrackerHitInputCollections" type="StringVec"> IBTrackerHits </parameter>
+    <parameter name="TrackerSimHitInputCollections" type="StringVec"> InnerTrackerBarrelCollection </parameter>
+    <parameter name="TrackerHitInputRelations" type="StringVec">IBTrackerHitsRelations </parameter>
+    <parameter name="TrackerHitOutputCollections" type="StringVec"> IBTrackerHits_CTF </parameter>
+    <parameter name="TrackerSimHitOutputCollections" type="StringVec"> InnerTrackerBarrelCollection_TF </parameter>
+    <parameter name="TrackerHitOutputRelations" type="StringVec"> IBTrackerHitsRelations_CTF </parameter>
+    <parameter name="TimeLowerLimit" type="double"> -0.18 </parameter>
+    <parameter name="TimeUpperLimit" type="double">  0.18 </parameter>
+    <parameter name="FillHistograms" type="bool" value="true" />
+  </processor>
+
+  <processor name="HitTimeFilter_OT" type = "FilterTimeHits"> 
+    <parameter name="TrackerHitInputCollections" type="StringVec"> OBTrackerHits </parameter>
+    <parameter name="TrackerSimHitInputCollections" type="StringVec"> OuterTrackerBarrelCollection </parameter>
+    <parameter name="TrackerHitInputRelations" type="StringVec">OBTrackerHitsRelations </parameter>
+    <parameter name="TrackerHitOutputCollections" type="StringVec"> OBTrackerHits_CTF </parameter>
+    <parameter name="TrackerSimHitOutputCollections" type="StringVec"> OuterTrackerBarrelCollection_TF </parameter>
+    <parameter name="TrackerHitOutputRelations" type="StringVec"> OBTrackerHitsRelations_CTF </parameter>
+    <parameter name="TimeLowerLimit" type="double"> -0.18 </parameter>
+    <parameter name="TimeUpperLimit" type="double">  0.18 </parameter>
+    <parameter name="FillHistograms" type="bool" value="true" />
+  </processor>

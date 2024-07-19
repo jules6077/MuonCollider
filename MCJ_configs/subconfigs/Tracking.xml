@@ -1,0 +1,103 @@
+<!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+  <!-- == Track finding configuration                                                                        == -->
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+
+  <!-- == ACTS TRACKING parameters == -->
+
+  <processor name="MyCKFTracking" type="ACTSSeededCKFTrackingProc">
+    <!-- Path to material description -->
+    <parameter name="MatFile" type="string">
+      /opt/ilcsoft/muonc/ACTSTracking/v1.1.0/data/material-maps.json
+    </parameter>
+    <!-- Path to tracking geometry -->
+    <parameter name="TGeoFile" type="string">
+      /opt/ilcsoft/muonc/ACTSTracking/v1.1.0/data/MuColl_v1.root
+    </parameter>
+    <!-- Vol Layer, use -1 for all, ACTS numbers -->
+    <parameter name="SeedingLayers" type="string">
+      13 2
+      13 6
+      13 10
+      13 14
+      14  2
+      14  6
+      14 10
+      14 14
+      15  2
+      15  6
+      15 10
+      15 14
+    </parameter>
+    <parameter name="SeedFinding_RMax" type="float">150</parameter>
+    <parameter name="SeedFinding_DeltaRMin" type="float">5</parameter>
+    <parameter name="SeedFinding_DeltaRMax" type="float">80</parameter>
+    <parameter name="SeedFinding_CollisionRegion" type="float">1</parameter>
+    <parameter name="SeedFinding_RadLengthPerSeed" type="float">0.1</parameter>
+    <parameter name="SeedFinding_SigmaScattering" type="float">50</parameter>
+    <parameter name="SeedFinding_MinPt" type="float">500</parameter>
+    <!-- CKF Configuration -->
+    <parameter name="CKF_Chi2CutOff" type="float">10</parameter>
+    <parameter name="CKF_NumMeasurementsCutOff" type="int">1</parameter>
+    <!--Define input tracker hits and relations. NB. Order must be respected -->
+    <parameter name="TrackerHitCollectionNames" type="StringVec" lcioInType="TrackerHitPlane">
+      VBTrackerHits
+      IBTrackerHits
+      OBTrackerHits
+      VETrackerHits
+      IETrackerHits
+      OETrackerHits
+    </parameter>
+    <!--Track Collection Names-->
+    <parameter name="RunCKF" type="bool">True</parameter>
+    <parameter name="TrackCollectionName" type="string" lcioOutType="Track">AllTracks</parameter>
+  </processor>
+
+  <processor name="MyTrackDeduper" type="ACTSDuplicateRemoval">
+    <parameter name="InputTrackCollectionName" type="string" lcioInType="Track">AllTracks</parameter>
+    <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">DedupedTracks</parameter>
+  </processor>
+
+  <processor name="MyTrackFilter" type="FilterTracks">
+    <parameter name="InTrackCollection" type="string" lcioInType="Track">DedupedTracks</parameter>
+    <parameter name="OutTrackCollection" type="string" lcioOutType="Track">SiTracks</parameter>
+    <parameter name="MinPt" type="float">0.5</parameter>
+    <parameter name="NHitsTotal" type="int">6</parameter>
+    <parameter name="NHitsVertex" type="int">0</parameter>
+    <parameter name="NHitsInner" type="int">0</parameter>
+    <parameter name="NHitsOuter" type="int">0</parameter>
+    <parameter name="Verbosity" type="string">DEBUG9 </parameter>
+  </processor>
+
+  <!-- == TRUTH TRACKING parameters == -->
+
+  <processor name="MyTruthTrackFinder" type="TruthTrackFinder">
+    <parameter name="FitForward" type="bool">true</parameter>
+    <!--Define input tracker hits and relations. NB. Order must be respected -->
+    <parameter name="TrackerHitCollectionNames" type="StringVec" lcioInType="TrackerHitPlane">
+      VBTrackerHits
+      VETrackerHits
+      IBTrackerHits
+      IETrackerHits
+      OBTrackerHits
+      OETrackerHits
+    </parameter>
+    <parameter name="SimTrackerHitRelCollectionNames" type="StringVec" lcioInType="LCRelation">
+      VBTrackerHitsRelations
+      VETrackerHitsRelations
+      IBTrackerHitsRelations
+      IETrackerHitsRelations
+      OBTrackerHitsRelations
+      OETrackerHitsRelations
+    </parameter>
+    <!--Name of the MCParticle input collection-->
+    <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticle </parameter>
+    <!--Silicon track Collection Name-->
+    <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track">SiTracks </parameter>
+    <!--Silicon track particle relation Collection Name-->
+    <parameter name="SiTrackRelationCollectionName" type="string" lcioOutType="LCRelation">SiTrackRelations </parameter>
+    <!--If true use the truth information to initialise the helical prefit, otherwise use prefit by fitting 3 hits-->
+    <parameter name="UseTruthInPrefit" type="bool">false </parameter>
+    <parameter name="Verbosity" type="string">DEBUG0 </parameter>
+  </processor>
