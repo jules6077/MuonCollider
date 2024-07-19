@@ -1,6 +1,5 @@
 # Setup up the Envireonment for Realistic Digi Processor
 ### Apptainer: 
-copyCodeBlock('<div>Thundercats</div>')
 apptainer shell docker://gitlab-registry.cern.ch/muon-collider/mucoll-deploy/mucoll:2.8-patch2-el9 
 ### environment:
 source /opt/setup_mucoll.sh
