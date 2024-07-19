@@ -3,7 +3,7 @@
 apptainer shell docker://gitlab-registry.cern.ch/muon-collider/mucoll-deploy/mucoll:2.8-patch2-el9 
 ### environment:
 source /opt/setup_mucoll.sh
-### setup up that environment from TrkHitsStudiesWorkspace:
+### setup up the environment from TrkHitsStudiesWorkspace:
 source path/to/TrkHitsStudiesWorkspace/setup.sh path/to/TrkHitsStudiesWorkspace/build
 
 # Now I can run my code: 
