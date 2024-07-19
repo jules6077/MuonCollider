@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<marlin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ilcsoft.desy.de/marlin/marlin.xsd">
+
+  <constants>
+  </constants>
+  
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+  <!-- == List of processors to execute                                                                      == -->
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+
+  <execute>
+
+    <!-- ==========  Setup  ========== -->
+    <processor name="MyAIDAProcessor"/>
+    <processor name="EventNumber" />
+    <processor name="Config" />
+
+    <!-- ==========  Geometry initialization  ========== -->
+    <processor name="InitDD4hep"/>
+
+    <!-- ==========  Overlay  ========== -->
+    <processor name="OverlayNone"/>
+
+    <!-- Including double-layer filtering if any Overlay is applied -->
+    <!-- ========== VertexDoubleLayerFiltering.xml ========== -->
+    <!-- <if condition="Config.OverlayNotFalse">
+      <processor name="FilterDL_VXDB"/>
+      <processor name="FilterDL_VXDE"/>
+    </if> -->
+
+    <!-- ==========  Tracker Digitization  ========== -->
+    <!--processor name="VXDBarrelRealisticDigi"/--> 
+    <!--processor name="VXDEndcapRealisticDigi"/-->
+    <processor name="InnerPlanarRealisticDigi"/>
+    <!-- <processor name="InnerEndcapRealisticDigi"/> -->
+    <!-- <processor name="OuterPlanarRealisticDigi"/> -->
+    <!-- <processor name="OuterEndcapRealisticDigi"/> -->
+
+    <!-- ========== Planar Digitizers =========-->
+    <!--processor name="VXDBarrelDigitiser" />
+    <processor name="VXDEndcapDigitiser" />
+    <processor name="InnerPlanarDigiProcessor" />
+    <processor name="InnerEndcapPlanarDigiProcessor"/>
+    <processor name="OuterPlanarDigiProcessor"/>
+    <processor name="OuterEndcapPlanarDigiProcessor"/-->
+
+
+    <!-- ==========  Filters  ========== -->
+    <!-- <processor name="FilterClusters" /> -->
+    <!-- <processor name="FilterDL_VXDB"/> -->
+    <!-- <processor name="FilterClusters_VE_loose" /> -->
+    <!--<processor name="FilterClusters_VE_tight4" /> -->
+
+
+    <!-- ==========  Tracking  ========== -->
+    <!-- <processor name="MyCKFTracking"/>
+    <processor name="MyTrackDeduper"/>
+    <processor name="MyTrackFilter"/> -->
+    
+    <!-- ==========  Track Perf  ========== --> 
+    <!-- <processor name="MyTrackTruth" />
+    <processor name="MyTrackPerf" />
+    <processor name="MySimHitHistos" /> -->
+
+    <!-- ==========  Output  ========== -->
+    <processor name="MyLCTuple" />
+    <processor name="Output_REC"/>
+    <processor name="LCIOWriter_all"/>
+    <processor name="LCIOWriter_light"/>
+    
+  </execute>
+
+  <include ref="subconfigs/InitDD4hep.xml"/>
+  <include ref="subconfigs/Overlay.xml"/>
+  <include ref="subconfigs/Digitization.xml"/>
+  <include ref="subconfigs/Tracking.xml"/>
+  <!--include ref="subconfigs/TrackPerf.xml"/-->
+  <include ref="subconfigs/Filters.xml"/>
+  <include ref="subconfigs/LCTuple.xml"/>
+
+
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+  <!-- == Global setup                                                                                       == -->
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+
+  <processor name="Config" type="CLICRecoConfig" >
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> DEBUG7  </parameter>
+    <parameter name="Overlay" type="string">False</parameter>
+    <parameter name="OverlayChoices" type="StringVec">False BIB</parameter>
+    <parameter name="Tracking" type="string">ACTS </parameter>
+    <parameter name="TrackingChoices" type="StringVec">Truth Conformal ACTS  </parameter>
+    <parameter name="VertexUnconstrained" type="string">OFF </parameter>
+    <parameter name="VertexUnconstrainedChoices" type="StringVec">ON OFF  </parameter>
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE0  </parameter> 
+<!--     
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT"> MESSAGE  </parameter>
+    <parameter name="Overlay" type="string">Test</parameter>
+    <parameter name="OverlayChoices" type="StringVec">False None Test Trimmed Full</parameter>
+    <parameter name="VertexUnconstrained" type="string">OFF </parameter>
+    <parameter name="VertexUnconstrainedChoices" type="StringVec">ON OFF  </parameter>  -->
+  </processor>
+
+  <processor name="EventNumber" type="Statusmonitor">
+    <parameter name="HowOften" type="int">1 </parameter>
+    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+  </processor>
+
+  <processor name="MyAIDAProcessor" type="AIDAProcessor">
+    <!--Processor that handles AIDA files. Creates on directory per processor.  Processors only need to create and fill the histograms, clouds and tuples. Needs to be the first ActiveProcessor-->
+    <!-- compression of output file 0: false >0: true (default) -->
+    <parameter name="Compress" type="int" value="1"/>
+    <!-- filename without extension-->
+    <parameter name="FileName" type="string" value="histos_simpledigi_1e_tracks"/>
+    <!-- type of output file xml (default) or root ( only OpenScientist)-->
+    <parameter name="FileType" type="string" value="root "/>
+  </processor>
+
+
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+  <!-- == Input configuration                                                                                == -->
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+
+  <global>
+    <parameter name="LCIOInputFiles">
+      /global/cfs/cdirs/atlas/sellgren/MuonCollider/code/MyWorkspace/sims/muGun_1e_v1_1.slcio
+    </parameter>
+    <!-- Limit the number of processed records (run+evt): -->
+    <parameter name="MaxRecordNumber" value="-1" />
+    <parameter name="SkipNEvents" value="0" />
+    <parameter name="SupressCheck" value="false" />  
+    <parameter name="Verbosity" options="DEBUG0-9,MESSAGE0-9,WARNING0-9,ERROR0-9,SILENT">WARNING </parameter>
+    <parameter name="RandomSeed" value="1234567890" />
+  </global>
+
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+  <!-- == Things that I am defining JULIET  :)                                                                 == -->
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+
+
+
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+  <!-- == Output configuration                                                                               == -->
+  <!-- ======================================================================================================== -->
+  <!-- ======================================================================================================== -->
+
+  <processor name="Output_REC" type="LCIOOutputProcessor">
+    <!--   standard output: full reconstruction keep all collections -->
+    <parameter name="LCIOOutputFile" type="string"> output_withbib_1e_simpledigi.slcio </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec"> EfficientMCParticles InefficientMCParticles </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <!-- <parameter name="SplitFileSizekB" type="int">996147 </parameter> -->
+    <parameter name="Verbosity" type="string">WARNING </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">  
+    </parameter>
+    <parameter name="DropCollectionTypes" type="StringVec">
+    </parameter>
+    <parameter name="KeepCollectionNames" type="StringVec">  </parameter>
+  </processor>
+
+  <!-- <processor name="Output_REC" type="LCIOOutputProcessor">
+    
+    <parameter name="LCIOOutputFile" type="string"> Output_REC.slcio </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec"> </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="None"/>
+    <parameter name="SplitFileSizekB" type="int">996147 </parameter> 
+    <parameter name="Verbosity" type="string">WARNING </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">  </parameter>
+    <parameter name="DropCollectionTypes" type="StringVec">  </parameter>
+    <parameter name="KeepCollectionNames" type="StringVec">  </parameter>
+  </processor> -->
+
+  <!-- LCIO output: keep all collections -->
+  <processor name="LCIOWriter_all" type="LCIOOutputProcessor">
+    <parameter name="LCIOOutputFile" type="string"> output_digi.slcio </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec">  </parameter>
+    <parameter name="DropCollectionTypes" type="StringVec">  </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">  </parameter>
+    <parameter name="KeepCollectionNames" type="StringVec">  </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <parameter name="Verbosity" type="string">WARNING </parameter>
+    <!-- <parameter name="SplitFileSizekB" type="int">996147 </parameter> -->
+  </processor>
+
+  <!-- LCIO output: keep only collections relevant for analysis -->
+  <processor name="LCIOWriter_light" type="LCIOOutputProcessor">
+    <parameter name="LCIOOutputFile" type="string"> output_digi_light.slcio </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec"> </parameter>
+    <!-- Removing SimHits, MCParticles and all the relation info -->
+    <parameter name="DropCollectionTypes" type="StringVec">
+      SimTrackerHit
+      SimCalorimeterHit
+      LCRelation
+    </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">
+      MCParticle
+      MCPhysicsParticle
+    </parameter>
+    <parameter name="KeepCollectionNames" type="StringVec">  </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <parameter name="Verbosity" type="string">WARNING </parameter>
+  </processor>
+
+</marlin>
+
