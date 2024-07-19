@@ -8,7 +8,7 @@ source path/to/TrkHitsStudiesWorkspace/setup.sh path/to/TrkHitsStudiesWorkspace/
 
 # Now I can run my code: 
 ### First I start by running my shell code:
-cd MCJ_configs/testing/runConfig.sh
+sh MCJ_configs/testing/runConfig.sh
 
 ### The Problem is that the resulting .slcio file still has zero IT and OT Barrel hits. 
 ### You Can see the code that I am running in MCJ_configs/config.xml, which is form the MC_configs github which I modified
