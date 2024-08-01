@@ -31,9 +31,9 @@
   <!--Name of the output TrackerHit collection-->
   <parameter name="OutputCollectionName" type="string" lcioOutType="TrackerHitPlane"> VXDBarrelHits</parameter>
   <!--Pixel Size X-->
-  <parameter name="PixelSizeX" type="double">0.010 </parameter>
+  <parameter name="PixelSizeX" type="double">0.025 </parameter>
   <!--Pixel Size Y-->
-  <parameter name="PixelSizeY" type="double">0.010 </parameter>
+  <parameter name="PixelSizeY" type="double">0.025 </parameter>
   <!--Apply Poisson smearing of electrons collected on pixels-->
   <parameter name="PoissonSmearing" type="int">1 </parameter>
   <!--Name of the output VTX trackerhit relation collection-->
@@ -59,7 +59,7 @@
   <!--Cell dynamic range for timing measurement [ns]-->
   <parameter name="TimeMaximum" type="double">10 </parameter>
   <!--Effective intrinsic time measurement resolution effects (ns).-->
-  <parameter name="TimeSmearingSigma" type="double">0.06 </parameter>
+  <parameter name="TimeSmearingSigma" type="double">0.05 </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <parameter name="Verbosity" type="string"> DEBUG </parameter>
 </processor>
@@ -96,14 +96,14 @@
 <processor name="ITBarrelDigitiser" type="MuonCVXDDigitiser">
   <parameter name="Verbosity" type="string">MESSAGE </parameter>
     <parameter name="CollectionName" type="string"> InnerTrackerBarrelCollection </parameter>
-    <parameter name="OutputCollectionName" type="string"> ITBarrelHits </parameter>
-    <parameter name="RelationColName" type="string"> ITBarrelHitsRelations </parameter>
+    <parameter name="OutputCollectionName" type="string"> IBTrackerHits </parameter>
+    <parameter name="RelationColName" type="string"> IBTrackerHitsRelations </parameter>
     <parameter name="SubDetectorName" type="string"> InnerTrackerBarrel </parameter>
     <!-- store all fired pixels -->
     <parameter name="StoreFiredPixels" type="int"> 1 </parameter>
-    <!-- Pixel size (mm) 0.050, 1.0-->
-    <parameter name="PixelSizeX" type="float"> 0.025 </parameter>
-    <parameter name="PixelSizeY" type="float"> 0.025 </parameter>
+    <!-- Pixel size (mm) -->
+    <parameter name="PixelSizeX" type="float"> 0.050 </parameter>
+    <parameter name="PixelSizeY" type="float"> 1.0 </parameter>
     <!-- FE threshold (in electrons) and electronic effects -->
     <!-- Calc: 500 electrons [previous val] * 100um/50um [doubling thickness of sensor, shortest path of charged particle]-->
     <parameter name="Threshold" type="float"> 1000. </parameter> 
@@ -140,7 +140,7 @@
     <!-- Max delta in energy for hit in electrons -->
     <parameter name="MaxEnergyDelta" type="float"> 100.0 </parameter> 
     <!-- Maximum values for track length (in mm) -->
-    <parameter name="MaxTrackLength" type="float"> 500.0 </parameter>
+    <parameter name="MaxTrackLength" type="float"> 10.0 </parameter>
     <!-- Number of electron-hole pairs per keV -->
     <parameter name="ElectronsPerKeV" type="float"> 270.3 </parameter>
 </processor>
@@ -184,8 +184,7 @@
     <parameter name="StoreFiredPixels" type="int"> 1 </parameter>
     <!-- Pixel size (mm) -->
     <parameter name="PixelSizeX" type="float"> 0.050 </parameter>
-    <!--pixelsizeY = 10.0-->
-    <parameter name="PixelSizeY" type="float"> 1.0 </parameter>
+    <parameter name="PixelSizeY" type="float"> 10.0 </parameter>
     <!-- FE threshold (in electrons) and electronic effects -->
     <!-- Calc: 500 electrons [previous val] * 100um/50um [doubling thickness of sensor, shortest path of charged particle]-->
     <parameter name="Threshold" type="float"> 1000. </parameter> 
@@ -222,7 +221,7 @@
     <!-- Max delta in energy for hit in electrons -->
     <parameter name="MaxEnergyDelta" type="float"> 100.0 </parameter> 
     <!-- Maximum values for track length (in mm) -->
-    <parameter name="MaxTrackLength" type="float"> 500.0 </parameter>
+    <parameter name="MaxTrackLength" type="float"> 10.0 </parameter>
     <!-- Number of electron-hole pairs per keV -->
     <parameter name="ElectronsPerKeV" type="float"> 270.3 </parameter>
 </processor>
